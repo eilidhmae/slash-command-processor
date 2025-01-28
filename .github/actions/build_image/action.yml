@@ -1,0 +1,11 @@
+name: "Build Starpunk Image"
+description: "Build container image with golang binary."
+runs:
+  - name: Build Golang
+    run: |
+      echo "Building Starpunk Image version `cat VERSION`"
+      ./renderhtml.sh
+      docker build -t ghcr.io/eilidhmae/starpunk:latest .
+      docker tag ghcr.io/eilidhmae/starpunk:latest ghcr.io/eilidhmae/starpunk:`cat VERSION`
+      git tag "v`cat VERSION`" HEAD
+      git push --tags

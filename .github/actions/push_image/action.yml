@@ -1,0 +1,7 @@
+name: "Push Starpunk Image"
+description: "Push container image to ghcr.io."
+runs:
+  - name: Push Image
+    run: |
+      docker push ghcr.io/eilidhmae/starpunk:latest
+      docker push ghcr.io/eilidhmae/starpunk:`cat VERSION`

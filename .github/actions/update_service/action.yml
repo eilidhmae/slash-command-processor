@@ -1,0 +1,7 @@
+name: "Update Fargate Service"
+description: "Deploy new container to Fargate."
+runs:
+  - name: Update Service
+    run: |
+      # TODO
+      #aws ecs update-service --force-new-deployment --service starpunk --cluster starpunk
