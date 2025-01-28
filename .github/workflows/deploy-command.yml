@@ -8,8 +8,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-        with:
-          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
       - name: Build Image
         uses: ./.github/actions/build_image
       - name: Push Image
