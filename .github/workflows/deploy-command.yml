@@ -1,12 +1,20 @@
-name: example-command
+name: deploy-command
 on:
   repository_dispatch:
-    types: [example-command]
+    types: [deploy-command]
 jobs:
-  example:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Add reaction
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Build Image
+        uses: ./.github/actions/build_image@main
+      - name: Push Image
+        uses: ./.github/actions/push_image@main
+      - name: Update Service
+        uses: ./.github/actions/update_service@main
+      - name: Add Reaction
         uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.PAT }}
