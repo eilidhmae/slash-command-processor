@@ -12,11 +12,17 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
       - name: Build Image
-        uses: ./.github/actions/build_image
+        run: |
+          echo "Building Starpunk Image version `cat VERSION`"
+          ./renderhtml.sh
+          docker build -t ghcr.io/eilidhmae/starpunk:latest .
+          docker tag ghcr.io/eilidhmae/starpunk:latest ghcr.io/eilidhmae/starpunk:`cat VERSION`
+          git tag "v`cat VERSION`" HEAD
+          git push --tags
       - name: Push Image
-        uses: ./.github/actions/push_image
-      - name: Update Service
-        uses: ./.github/actions/update_service
+        run: |
+          docker push ghcr.io/eilidhmae/starpunk:latest
+          docker push ghcr.io/eilidhmae/starpunk:`cat VERSION`
       - name: Add Reaction
         uses: peter-evans/create-or-update-comment@v4
         with:
